@@ -5,7 +5,10 @@ layout: default
 <div class="container">
   <div class="home">
     <h1 class="page-heading">Śląsk IT</h1>
+    {% include mailchimp.html %}
   </div>
+
+  <br>
 
   <div ng-app="slaskIT" ng-controller="EventsController" ng-cloak>
     {% raw %}
@@ -22,10 +25,5 @@ layout: default
       </ul>
     </div>
     {% endraw %}
-  </div>
-
-  <div class="subscribe">
-    <h2>Zapisz się do listy</h2>
-    {% include mailchimp.html %}
   </div>
 </div>
