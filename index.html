@@ -17,8 +17,7 @@ layout: default
     {% raw %}
     <p class="text-muted" ng-if="!loaded">Ładowanie wydarzeń…</p>
     <div ng-if="loaded">
-      <p ng-if="days === 7">Wydarzenia w nadchodzącym tygodniu:</p>
-      <p ng-if="days > 7">Wydarzenia w następnych {{days / 7}} tygodniach:</p>
+      <p>Wydarzenia w następnych {{days}} dniach:</p>
       <ul>
         <li ng-repeat="event in events">
           <h4><a href="{{event.link}}">{{event.title}}</a></h4>
