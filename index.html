@@ -4,7 +4,9 @@ layout: default
 
 <div class="container">
   <div class="home">
-    <h1 class="page-heading">Śląsk IT</h1>
+    <h1 class="page-heading">
+      <a href="/">Śląsk IT</a>
+    </h1>
     {% include mailchimp.html %}
     <p class="text-muted">
       Każdej niedzieli wysyłamy jedną wiadomość zawierającą wydarzenia nadchodzącego tygodnia.
@@ -17,8 +19,7 @@ layout: default
     {% raw %}
     <p class="text-muted" ng-if="!loaded">Ładowanie wydarzeń…</p>
     <div ng-if="loaded">
-      <p ng-if="days === 7">Wydarzenia w nadchodzącym tygodniu:</p>
-      <p ng-if="days > 7">Wydarzenia w następnych {{days / 7}} tygodniach:</p>
+      <p>Nadchodzące wydarzenia:</p>
       <ul>
         <li ng-repeat="event in events">
           <h4><a href="{{event.link}}">{{event.title}}</a></h4>
@@ -27,7 +28,6 @@ layout: default
           <p>{{event.Opis}}</p>
         </li>
       </ul>
-      <button class="btn btn-primary" ng-click="fetch(days + 7)">Pokaż następne</button>
     </div>
     {% endraw %}
   </div>
