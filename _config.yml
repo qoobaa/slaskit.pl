@@ -1,9 +1,8 @@
 title: Śląsk IT
 email: kontakt@slaskit.pl
-description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://slaskit.pl" # the base hostname & protocol for your site
+description: >
+  Wydarzenia IT ze Śląska i okolic w jednym miejscu, dostarczane co
+  tydzień w formie przejrzystego newslettera.
+baseurl: ""
+url: "https://slaskit.pl"
 markdown: kramdown
