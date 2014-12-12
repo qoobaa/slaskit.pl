@@ -2,33 +2,37 @@
 layout: default
 ---
 
-<div class="container">
-  <div class="home">
-    <h1 class="page-heading">
-      <a href="/">Śląsk IT</a>
-    </h1>
-    {% include mailchimp.html %}
-    <p class="text-muted">
-      Każdej niedzieli wysyłamy jedną wiadomość zawierającą wydarzenia nadchodzącego tygodnia.
-    </p>
-  </div>
+<main class="wrapper" ng-app="slaskIT" ng-controller="EventsController" ng-cloak>
+  {% raw %}
 
-  <br>
+  <p class="text-muted" ng-if="!loaded">Ładowanie wydarzeń…</p>
 
-  <div ng-app="slaskIT" ng-controller="EventsController" ng-cloak>
-    {% raw %}
-    <p class="text-muted" ng-if="!loaded">Ładowanie wydarzeń…</p>
-    <div ng-if="loaded">
-      <p>Nadchodzące wydarzenia:</p>
-      <ul>
-        <li ng-repeat="event in events">
-          <h4><a href="{{event.link}}">{{event.title}}</a></h4>
-          <p><strong>{{event.Nazwamiejsca}}, {{event.Miasto}}, {{event.Adres}}</strong></p>
-          <p><em>{{event.dzien}}, {{event["y:published"].day}} {{event.miesiac}}, godzina {{event["y:published"].hour}}:{{event.minuty}}</em></p>
-          <p>{{event.Opis}}</p>
+  <ul class="days" ng-if="loaded">
+    <li class="day" ng-repeat="day in days">
+      <div class="day-label">
+        <div class="day-number">{{day.day}}</div>
+        <div class="month">{{day.event.miesiac}}</div>
+      </div>
+      <ul class="events">
+        <li class="event" ng-repeat="event in events | filter : dayMatcher(day) ">
+          <p class="event-header">
+            <span>{{event["y:published"].hour}}:{{event.minuty}}</span>
+            |
+            <a href="{{event.link}}">
+              <strong>
+                {{event.title}}
+              </strong>
+            </a>
+          </p>
+          <p class="event-place">
+            {{event.Nazwamiejsca}}, {{event.Miasto}}, {{event.Adres}}
+          </p>
+          <p class="event-description">
+            {{event.Opis}}
+          </p>
         </li>
       </ul>
-    </div>
-    {% endraw %}
-  </div>
-</div>
+    </li>
+  </ul>
+  {% endraw %}
+</main>
