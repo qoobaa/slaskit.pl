@@ -2,19 +2,21 @@
 layout: default
 ---
 
-<main class="wrapper" ng-app="slaskIT" ng-controller="EventsController" ng-cloak>
+<main class="container" ng-app="slaskIT" ng-controller="EventsController" ng-cloak>
   {% raw %}
 
-  <p class="text-muted" ng-if="!loaded">Ładowanie wydarzeń…</p>
+  <p class="text-muted text-center loading" ng-if="!loaded">Ładowanie wydarzeń…</p>
 
-  <ul class="days" ng-if="loaded">
-    <li class="day" ng-repeat="day in days">
-      <div class="day-label">
-        <div class="day-number">{{day.day}}</div>
-        <div class="month">{{day.event.miesiac}}</div>
+  <div class="row" ng-if="loaded">
+    <div class="day" ng-repeat="day in days">
+      <div class="col-md-2">
+        <div class="day-label text-center">
+          <div class="day-number">{{day.day}}</div>
+          <div class="month">{{day.event.miesiac}}</div>
+        </div>
       </div>
-      <ul class="events">
-        <li class="event" ng-repeat="event in events | filter : dayMatcher(day) ">
+      <div class="col-md-10">
+        <div class="event" ng-repeat="event in events | filter : dayMatcher(day) ">
           <p class="event-header">
             <span>{{event["y:published"].hour}}:{{event.minuty}}</span>
             |
@@ -30,9 +32,9 @@ layout: default
           <p class="event-description">
             {{event.Opis}}
           </p>
-        </li>
-      </ul>
-    </li>
-  </ul>
+        </div>
+      </div>
+    </div>
+  </div>
   {% endraw %}
 </main>

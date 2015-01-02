@@ -1,0 +1,27 @@
+$font-family-sans-serif:  Ubuntu, sans-serif;
+$font-size-base: 16px;
+
+$brand-primary: #ff6000;
+
+$border-radius-base: 0;
+$border-radius-large: 0;
+$border-radius-small: 0;
+
+$grid-gutter-width: 30px;
+
+// Small screen / tablet
+$container-tablet: (720px + $grid-gutter-width);
+//** For `$screen-sm-min` and up.
+$container-sm: $container-tablet;
+
+// Medium screen / desktop
+$container-desktop: (720px + $grid-gutter-width) !default;
+//** For `$screen-md-min` and up.
+$container-md: $container-desktop !default;
+
+// Large screen / wide desktop
+$container-large-desktop: (720px + $grid-gutter-width) !default;
+//** For `$screen-lg-min` and up.
+$container-lg: $container-large-desktop !default;
+
+$footer-height: 120px;

@@ -1,0 +1,126 @@
+---
+# this ensures Jekyll reads the file to be transformed into CSS later
+# only Main files contain this front matter, not partials.
+---
+
+@import "variables";
+@import "bootstrap";
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: $footer-height;
+}
+
+.hero {
+    background: $brand-primary;
+    color: white;
+    padding: 9rem 3rem 7rem;
+}
+
+.hero-form {
+    margin: 5rem 0;
+
+    fieldset {
+        border: 5px solid rgba(black,.05);
+    }
+
+    input {
+        height: 4rem;
+        border: 0;
+        width: 350px;
+        padding: 0 1em;
+        color: $brand-primary;
+    }
+
+    button {
+        color: white;
+        height: 4rem;
+        margin-left: -3px;
+        padding: 0 2em;
+        background-color: lighten($brand-primary, 10%);
+        transition: background-color .175s;
+
+        &:hover {
+            color: white;
+            background-color: lighten($brand-primary, 14%);
+        }
+
+        &:active {
+            color: white;
+            background-color: lighten($brand-primary, 10%);
+        }
+    }
+}
+
+.hero-text {
+    font-size: 1.8rem;
+    line-height: 1.5em;
+}
+
+.day {
+    margin: 6rem 0;
+}
+
+.day-label {
+    background-color: $brand-primary;
+    color: white;
+    padding: 0.5rem;
+}
+
+.day-number {
+    font-size: 4.6rem;
+}
+
+.month {
+    font-size: 1.2rem;
+}
+
+.events {
+    margin-left: 10rem;
+}
+
+.event {
+    margin-bottom: 3rem;
+
+    p {
+        margin-bottom: .5rem;
+        line-height: 1.4em;
+    }
+
+    .event-header {
+        color: $brand-primary;
+        font-size: 2rem;
+    }
+
+    .event-place {
+        color: $brand-primary;
+        font-weight: 400;
+    }
+}
+
+.loading {
+    margin: 6rem 0;
+}
+
+.site-footer {
+    padding: 25px 0;
+    background: $gray-dark;
+    color: white;
+    position: absolute;
+    height: $footer-height;
+    width: 100%;
+    bottom: 0;
+
+    a {
+        color: white;
+    }
+}
+
+.social {
+    margin: 0 5px;
+    display: inline-block;
+}
