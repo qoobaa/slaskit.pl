@@ -16,9 +16,16 @@ body {
 }
 
 .hero {
-    background: $brand-primary;
     color: white;
-    padding: 9rem 3rem 7rem;
+    background-image: url(/img/meetjs.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.hero-content {
+    padding: 150px 0 120px;
+    background: transparentize($brand-primary, 0.5);
 }
 
 .hero-form {
@@ -41,17 +48,17 @@ body {
         height: 4rem;
         margin-left: -3px;
         padding: 0 2em;
-        background-color: lighten($brand-primary, 10%);
+        background-color: lighten($brand-primary, 0%);
         transition: background-color .175s;
 
         &:hover {
             color: white;
-            background-color: lighten($brand-primary, 14%);
+            background-color: lighten($brand-primary, 5%);
         }
 
         &:active {
             color: white;
-            background-color: lighten($brand-primary, 10%);
+            background-color: lighten($brand-primary, 0%);
         }
     }
 }
