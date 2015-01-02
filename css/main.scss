@@ -17,7 +17,7 @@ body {
 
 .hero {
     color: white;
-    background-image: url(/img/meetjs.jpg);
+    background-image: url(../img/meetjs.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -124,7 +124,7 @@ body {
     bottom: 0;
 
     a {
-        color: white;
+        color: $gray-lighter;
     }
 }
 
