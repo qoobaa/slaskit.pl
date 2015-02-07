@@ -19,6 +19,23 @@ slaskIT.controller("EventsController", function ($scope, $http, PIPE_URL) {
         return "https://www.google.pl/maps/place/" + encodeURIComponent(place);
     };
 
+    $scope.googleCalendarUrl = function (event) {
+        var start, offset,
+            date = new Date(event["y:published"].utime * 1000),
+            location = [event.Adres, event.Miasto].join(", ");
+
+        offset = date.getTimezoneOffset() * 60 * 1000;
+        start = new Date(event["y:published"].utime * 1000 + offset).toISOString().replace(/[-:]/g, "").replace(/.\d\d\dZ/, "Z");
+
+        return ""
+            + "https://www.google.com/calendar/render?action=TEMPLATE"
+            + "&text=" + encodeURIComponent(event.title)
+            + "&dates=" + encodeURIComponent(start) + "/" + encodeURIComponent(start)
+            + "&details=" + encodeURIComponent("Szczegóły wydarzenia: " + event.link)
+            + "&location=" + encodeURIComponent(location)
+            + "&sf=true&output=xml";
+    };
+
     $scope.fetch = function () {
         $http.get(PIPE_URL).then(function (response) {
             $scope.loaded = true;
