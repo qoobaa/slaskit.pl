@@ -13,6 +13,12 @@ slaskIT.controller("EventsController", function ($scope, $http, PIPE_URL) {
         };
     };
 
+    $scope.mapUrl = function (event) {
+        var place = [event.Adres, event.Miasto].join(", ");
+
+        return "https://www.google.pl/maps/place/" + encodeURIComponent(place);
+    };
+
     $scope.fetch = function () {
         $http.get(PIPE_URL).then(function (response) {
             $scope.loaded = true;

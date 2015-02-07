@@ -11,6 +11,7 @@ layout: default
     <div class="day" ng-repeat="day in days">
       <div class="col-sm-2">
         <div class="day-label text-center">
+          <div class="day-name">{{day.event.dzien}}</div>
           <div class="day-number">{{day.day}}</div>
           <div class="month">{{day.event.miesiac}}</div>
         </div>
@@ -20,14 +21,14 @@ layout: default
           <p class="event-header">
             <span>{{event["y:published"].hour}}:{{event.minuty}}</span>
             |
-            <a href="{{event.link}}">
+            <a href="{{event.link}}" target="_blank">
               <strong>
                 {{event.title}}
               </strong>
             </a>
           </p>
           <p class="event-place">
-            {{event.Nazwamiejsca}}, {{event.Miasto}}, {{event.Adres}}
+            <a href="{{mapUrl(event)}}" target="_blank">{{event.Nazwamiejsca}}, {{event.Miasto}}, {{event.Adres}}</a>
           </p>
           <p class="event-description">
             {{event.Opis}}
@@ -35,6 +36,18 @@ layout: default
         </div>
       </div>
     </div>
+    <a href="/dodaj.html">
+      <div class="col-sm-2">
+        <div class="add-label">
+          +
+        </div>
+      </div>
+      <div class="col-sm-10">
+        <div class="add-content">
+          <strong>Dodaj wydarzenie</strong>
+        </div>
+      </div>
+    </a>
   </div>
   {% endraw %}
 </main>
