@@ -25,3 +25,6 @@ $container-large-desktop: (720px + $grid-gutter-width) !default;
 $container-lg: $container-large-desktop !default;
 
 $footer-height: 90px;
+
+$navbar-default-color: white;
+$navbar-default-bg: $brand-primary;
