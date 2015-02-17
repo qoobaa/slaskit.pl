@@ -28,7 +28,9 @@ layout: default
             </a>
           </p>
           <p class="event-place">
-            <a href="{{mapUrl(event)}}" target="_blank">{{event.Nazwamiejsca}}, {{event.Miasto}}, {{event.Adres}}</a>
+            <a href="{{mapUrl(event)}}" target="_blank">
+              <span ng-show="event.Nazwamiejsca">{{event.Nazwamiejsca}}, </span>{{event.Miasto}}, {{event.Adres}}
+            </a>
           </p>
           <p class="event-description">
             {{event.Opis}}
