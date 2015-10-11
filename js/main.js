@@ -1,62 +1,49 @@
 var slaskIT = angular.module("slaskIT", []);
 
-slaskIT.constant("PIPE_URL", "https://pipes.yahoo.com/pipes/pipe.run?_id=328d9ea8b0d9dba60535103a6c3a532d&_render=json&days=365");
+slaskIT.constant("SPREADSHEET_URL", "https://spreadsheets.google.com/feeds/list/1p1ETuEGcyLpj_kvv7LUroEgTL8ZC7h3XI9_Tx1awBaU/o65ytag/public/values?alt=json-in-script&callback=JSON_CALLBACK");
 
-slaskIT.controller("EventsController", function ($scope, $http, PIPE_URL) {
-    $scope.dayMatcher = function (day) {
-        return function (event) {
-            var date = event["y:published"];
-
-            return date.year === day.year
-                && date.month === day.month
-                && date.day === day.day;
-        };
-    };
-
-    $scope.mapUrl = function (event) {
-        var place = [event.Adres, event.Miasto].join(", ");
+slaskIT.filter("googleMapsUrl", function () {
+    return function (event) {
+        var place = [event.gsx$adres.$t, event.gsx$miasto.$t].join(", ");
 
         return "https://www.google.pl/maps/place/" + encodeURIComponent(place);
     };
+});
 
-    $scope.googleCalendarUrl = function (event) {
-        var start, offset,
-            date = new Date(event["y:published"].utime * 1000),
-            location = [event.Adres, event.Miasto].join(", ");
+slaskIT.filter("googleCalendarUrl", function () {
+    return function (event) {
+        var start,
+            location = [event.gsx$adres.$t, event.gsx$miasto.$t].join(", ");
 
-        offset = date.getTimezoneOffset() * 60 * 1000;
-        start = new Date(event["y:published"].utime * 1000 + offset).toISOString().replace(/[-:]/g, "").replace(/.\d\d\dZ/, "Z");
+        start = new Date(event.gsx$data.$t).toISOString().replace(/[-:]/g, "").replace(/.\d\d\dZ/, "Z");
 
         return ""
             + "https://www.google.com/calendar/render?action=TEMPLATE"
-            + "&text=" + encodeURIComponent(event.title)
+            + "&text=" + encodeURIComponent(event.gsx$nazwa.$t)
             + "&dates=" + encodeURIComponent(start) + "/" + encodeURIComponent(start)
-            + "&details=" + encodeURIComponent("Szczegóły wydarzenia: " + event.link)
+            + "&details=" + encodeURIComponent("Szczegóły wydarzenia: " + event.gsx$linkdostrony.$t)
             + "&location=" + encodeURIComponent(location)
             + "&sf=true&output=xml";
     };
+});
 
+slaskIT.controller("EventsController", function ($scope, $http, SPREADSHEET_URL) {
     $scope.fetch = function () {
-        $http.get(PIPE_URL).then(function (response) {
+        $http.jsonp(SPREADSHEET_URL).then(function (response) {
+            $scope.days = {};
             $scope.loaded = true;
-            $scope.days = [];
-            $scope.events = response.data.value.items;
 
-            $scope.events.forEach(function (event) {
-                var lastDay = $scope.days[$scope.days.length - 1],
-                    date = event["y:published"];
+            response.data.feed.entry.sort(function (a, b) {
+                return Date.parse(a.gsx$data.$t) - Date.parse(b.gsx$data.$t);
+            }).forEach(function (event) {
+                var day = event.gsx$data.$t.substr(0, 10);
 
-                if (!lastDay
-                    || lastDay.year  !== date.year
-                    || lastDay.month !== date.month
-                    || lastDay.day   !== date.day) {
+                if (new Date().toISOString().substr(0, 10) < day) {
+                    var days = $scope.days[day] || ($scope.days[day] = []);
 
-                    $scope.days.push({
-                        year: date.year,
-                        month: date.month,
-                        day: date.day,
-                        event: event
-                    });
+                    days.push(event);
+
+                    event.date = event.gsx$data.$t.replace(" ", "T");
                 }
             });
         });
