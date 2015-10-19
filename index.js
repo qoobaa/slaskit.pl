@@ -103,4 +103,4 @@ http.createServer(function (request, response) {
 
         response.end(rss);
     });
-}).listen(process.env.PORT);
+}).listen(process.env.PORT || 4200);
