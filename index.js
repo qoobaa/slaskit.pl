@@ -1,5 +1,6 @@
 const http = require("http");
 const https = require("https");
+const port = process.env.PORT || 4200;
 
 function filterEventsBetweenDates(events, start, end) {
     var results = [];
@@ -103,4 +104,4 @@ http.createServer(function (request, response) {
 
         response.end(rss);
     });
-}).listen(process.env.PORT || 4200);
+}).listen(port);
