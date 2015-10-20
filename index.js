@@ -70,7 +70,7 @@ function renderRSS(events) {
             result += '<item>';
             result += `<guid>${guid}</guid>`;
             result += `<title>${title}</title>`;
-            result += '<author>kontakt@slaskit.pl</author>';
+            result += '<author>kontakt@slaskit.pl (Śląsk IT)</author>';
             result += `<pubDate>${now}</pubDate>`;
             result += `<link>${link}</link>`;
             result += `<description>${description}</description>`;
