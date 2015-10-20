@@ -99,7 +99,7 @@ function fetch(url, callback) {
 }
 
 http.createServer(function (request, response) {
-    response.writeHead(200, { "Content-Type": "application/xml" });
+    response.writeHead(200, { "Content-Type": "application/rss+xml" });
 
     fetch("https://spreadsheets.google.com/feeds/list/1p1ETuEGcyLpj_kvv7LUroEgTL8ZC7h3XI9_Tx1awBaU/o65ytag/public/values?alt=json", function (text) {
         let events = JSON.parse(text).feed.entry;
