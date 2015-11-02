@@ -42,7 +42,7 @@ function renderRSS(events) {
             let event = events[i];
             let title = event.gsx$nazwa.$t;
             let link = event.gsx$linkdostrony.$t;
-            let guid = event.id.$t;
+            let guid = event.id.$t.split("/").reverse()[0];
 
             let year = parseInt(event.gsx$data.$t.substr(0, 4), 10);
             let month = parseInt(event.gsx$data.$t.substr(5, 2), 10) - 1;
