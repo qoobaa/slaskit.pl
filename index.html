@@ -29,7 +29,7 @@ layout: default
           </p>
           <p class="event-place">
             <a href="{{event | googleMapsUrl}}" target="_blank">
-              <span ng-show="event.Nazwamiejsca">{{event.gsx$nazwamiejsca.$t}}, </span>{{event.gsx$miasto.$t}}, {{event.gsx$adres.$t}}
+              <span ng-show="event.gsx$nazwamiejsca.$t">{{event.gsx$nazwamiejsca.$t}}, </span>{{event.gsx$miasto.$t}}, {{event.gsx$adres.$t}}
             </a>
           </p>
           <p class="event-description">
