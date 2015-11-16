@@ -104,7 +104,7 @@ http.createServer(function (request, response) {
     fetch("https://spreadsheets.google.com/feeds/list/1p1ETuEGcyLpj_kvv7LUroEgTL8ZC7h3XI9_Tx1awBaU/o65ytag/public/values?alt=json", function (text) {
         let events = JSON.parse(text).feed.entry;
         let nextWeekEvents = filterEventsBetweenDates(events, new Date(), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000));
-        let rss = renderRSS(nextWeekEvents.sort((a, b) => a.gsx$data.$t.localeCompare(b.gsx$data.$t));
+        let rss = renderRSS(nextWeekEvents.sort((a, b) => a.gsx$data.$t.localeCompare(b.gsx$data.$t)));
 
         response.end(rss);
     });
