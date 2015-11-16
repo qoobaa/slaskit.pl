@@ -4,6 +4,7 @@
 const http = require("http");
 const https = require("https");
 const port = process.env.PORT || 4200;
+const spreadsheetUrl = "https://spreadsheets.google.com/feeds/list/1p1ETuEGcyLpj_kvv7LUroEgTL8ZC7h3XI9_Tx1awBaU/o65ytag/public/values?alt=json";
 
 function filterEventsBetweenDates(events, start, end) {
     let results = [];
@@ -85,23 +86,18 @@ function renderRSS(events) {
 }
 
 function fetch(url, callback) {
-    https.get(url, function (response) {
+    https.get(url, (response) => {
         let text = "";
 
-        response.on("data", function (data) {
-            text += data;
-        });
-
-        response.on("end", function () {
-            callback(text);
-        });
+        response.on("data", (data) => text += data);
+        response.on("end", () => callback(text));
     });
 }
 
-http.createServer(function (request, response) {
+http.createServer((request, response) => {
     response.writeHead(200, { "Content-Type": "application/xml" });
 
-    fetch("https://spreadsheets.google.com/feeds/list/1p1ETuEGcyLpj_kvv7LUroEgTL8ZC7h3XI9_Tx1awBaU/o65ytag/public/values?alt=json", function (text) {
+    fetch(spreadsheetUrl, (text) => {
         let events = JSON.parse(text).feed.entry;
         let nextWeekEvents = filterEventsBetweenDates(events, new Date(), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000));
         let rss = renderRSS(nextWeekEvents.sort((a, b) => a.gsx$data.$t.localeCompare(b.gsx$data.$t)));
