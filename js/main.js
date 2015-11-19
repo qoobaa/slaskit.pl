@@ -38,7 +38,7 @@ slaskIT.controller("EventsController", function ($scope, $http, SPREADSHEET_URL)
             }).forEach(function (event) {
                 var day = event.gsx$data.$t.substr(0, 10);
 
-                if (new Date().toISOString().substr(0, 10) < day && event.gsx$zatwierdzono.$t === "tak") {
+                if (new Date().toISOString().substr(0, 10) <= day && event.gsx$zatwierdzono.$t === "tak") {
                     var days = $scope.days[day] || ($scope.days[day] = []);
 
                     days.push(event);
