@@ -6,6 +6,12 @@ const https = require("https");
 const port = process.env.PORT || 4200;
 const spreadsheetUrl = "https://spreadsheets.google.com/feeds/list/1p1ETuEGcyLpj_kvv7LUroEgTL8ZC7h3XI9_Tx1awBaU/o65ytag/public/values?alt=json";
 
+function escapeHtml(text) {
+    const CHARS = { '"': "&quot;", "&": "&amp;", "<": "&lt;", ">": "&gt;" };
+
+    return text.replace(/[\"&<>]/g, (a) => CHARS[a]);
+};
+
 function filterEventsBetweenDates(events, start, end) {
     let results = [];
 
@@ -60,21 +66,23 @@ function renderRSS(events) {
 
             let description = "";
 
-            description += '&lt;b&gt;';
+            description += '<b>';
             description += [event.gsx$nazwamiejsca.$t, event.gsx$miasto.$t, event.gsx$adres.$t].join(", ");
-            description += '&lt;/b&gt;&lt;br&gt;';
-            description += '&lt;i&gt;';
+            description += '</b>';
+            description += '<br>';
+            description += '<i>';
             description += [dayName, `${day} ${monthName}`, `godzina ${hourMinute}`].join(", ");
-            description += '&lt;/i&gt;&lt;br&gt;';
+            description += '</i>';
+            description += '<br>';
             description += event.gsx$opis.$t;
 
             result += '<item>';
             result += `<guid>${guid}</guid>`;
-            result += `<title>${title}</title>`;
+            result += `<title>${escapeHtml(title)}</title>`;
             result += '<author>kontakt@slaskit.pl (Śląsk IT)</author>';
             result += `<pubDate>${now}</pubDate>`;
-            result += `<link>${link}</link>`;
-            result += `<description>${description}</description>`;
+            result += `<link>${escapeHtml(link)}</link>`;
+            result += `<description>${escapeHtml(description)}</description>`;
             result += '</item>';
         }
 
