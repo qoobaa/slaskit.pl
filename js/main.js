@@ -15,7 +15,8 @@ slaskIT.filter("googleCalendarUrl", function () {
         var start,
             location = [event.gsx$adres.$t, event.gsx$miasto.$t].join(", ");
 
-        start = new Date(event.gsx$data.$t).toISOString().replace(/[-:]/g, "").replace(/.\d\d\dZ/, "Z");
+        // YYYY-MM-DD HH:MM:SS format is not supported natively e.g. by Firefox
+        start = moment(event.gsx$data.$t).toISOString().replace(/[-:]/g, "").replace(/.\d\d\dZ/, "Z");
 
         return ""
             + "https://www.google.com/calendar/render?action=TEMPLATE"
@@ -33,18 +34,19 @@ slaskIT.controller("EventsController", function ($scope, $http, SPREADSHEET_URL)
             $scope.days = {};
             $scope.loaded = true;
 
-            response.data.feed.entry.sort(function (a, b) {
-                return Date.parse(a.gsx$data.$t) - Date.parse(b.gsx$data.$t);
-            }).forEach(function (event) {
+            response.data.feed.entry
+            .filter(function (event) {
+                return moment(event.gsx$data.$t).isAfter(moment()) && event.gsx$zatwierdzono.$t === "tak";
+            })
+            .sort(function (a, b) {
+                return moment(a.gsx$data.$t).diff(moment(b.gsx$data.$t));
+            })
+            .forEach(function (event) {
                 var day = event.gsx$data.$t.substr(0, 10);
+                var days = $scope.days[day] || ($scope.days[day] = []);
 
-                if (new Date().toISOString().substr(0, 10) <= day && event.gsx$zatwierdzono.$t === "tak") {
-                    var days = $scope.days[day] || ($scope.days[day] = []);
-
-                    days.push(event);
-
-                    event.date = event.gsx$data.$t.replace(" ", "T");
-                }
+                days.push(event);
+                event.date = event.gsx$data.$t.replace(" ", "T");
             });
         });
     };
